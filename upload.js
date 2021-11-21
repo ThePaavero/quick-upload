@@ -34,5 +34,5 @@ const command = `scp ${getPossibleKeyFlag()} ${sourcePath} ${config.sshUsername}
 const response = execSync(command).toString()
 
 if (response.trim() === '') {
-  console.log(`Success. Here's your link:\nhttps://${config.remoteDomain}${config.uploadDirPath.replace('/var/www', '')}${filename.replace(workingDir, '')}`)
+  console.log(`Success. Here's your link:\n${config.remoteSchema}://${config.remoteDomain}${config.uploadDirPath.replace('/var/www', '')}${filename.replace(workingDir, '')}`)
 }
