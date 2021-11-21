@@ -58,6 +58,9 @@ const uploadFile = (config: ConfigObject): string | void => {
 if (argv[3] && argv[3] === '-d') {
   deleteFile(config)
   process.exit(0)
+} else if (argv[3]) {
+  console.log(chalk.bgRed.black(`⛔ Unknown flag "${argv[3]}"`))
+  process.exit(0)
 }
 
 uploadFile(config)
