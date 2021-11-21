@@ -32,7 +32,7 @@
 ## Uploading a file
 
 - Navigate to a directory with the file you want to upload.
-- `upload <FILENAME>`
+- `upload <FILENAME>` (tab-autocomplete will work)
 
 ---
 
