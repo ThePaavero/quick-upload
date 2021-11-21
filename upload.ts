@@ -33,13 +33,11 @@ const getPossibleKeyFlag = (config: ConfigObject) => {
 }
 
 const processPossibleDeleting = (config: ConfigObject) => {
-  if (argv[3] && argv[3] === '-d') {
-    try {
-      execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'rm ${getFilenameWithoutPath(config)}'`)
-      return console.log(chalk.greenBright(`The file ${getFilenameWithoutPath(config)} has been removed.`))
-    } catch (error) {
-      return console.log(chalk.bgRed.black(`ERR: The file ${getFilenameWithoutPath(config)} could not be removed.\n\nThe error from remote:\n\n${error.toString()}`))
-    }
+  try {
+    execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'rm ${getFilenameWithoutPath(config)}'`)
+    return console.log(chalk.bgWhite.black(`The file ${getFilenameWithoutPath(config)} has been removed.`))
+  } catch (error) {
+    return console.log(chalk.bgRed.black(`ERR: The file ${getFilenameWithoutPath(config)} could not be removed.\n\nThe error from remote:\n\n${error.toString()}`))
   }
 }
 
@@ -53,7 +51,7 @@ const processPossibleUploading = (config: ConfigObject) => {
     const url = `${config.remoteSchema}://${config.remoteDomain}${config.uploadDirPath.replace('/var/www', '')}${filename.replace(workingDir, '')}`
     console.log(chalk.green('Success.'))
     console.log(chalk.white(`Here's your link:`))
-    console.log(chalk.blueBright(url))
+    console.log(chalk.bgWhite.black(url))
   } catch (error) {
     return console.log(chalk.bgRed.black(`ERR: The file ${getFilenameWithoutPath(config)} could not be uploaded.\nThe error from remote:\n${error.toString()}`))
   }
