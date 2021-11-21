@@ -1,5 +1,5 @@
 #!/usr/bin/node
-const { execSync } = require('child_process')
+const { execSync, exec } = require('child_process')
 const fs = require('fs')
 const { argv } = require('process')
 const config = require('./.env.json')
@@ -12,6 +12,10 @@ if (!filename) {
   process.exit(-1)
 }
 
+const getFilenameWithoutPath = () => {
+  return `${config.uploadDirPath}${filename.replace(workingDir, '')}`
+}
+
 const getPossibleKeyFlag = () => {
   if (!config.sshKeyPath) {
     return ''
@@ -19,10 +23,16 @@ const getPossibleKeyFlag = () => {
   return `-i ${config.sshKeyPath}`
 }
 
+if (argv[3] && argv[3] === '-d') {
+  execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'rm ${getFilenameWithoutPath()}'`)
+  return
+}
+
 const sourcePath = `${workingDir}/${filename}`
 const command = `scp ${getPossibleKeyFlag()} ${sourcePath} ${config.sshUsername}@${config.remoteDomain}:${config.uploadDirPath}`
 const response = execSync(command).toString()
 
 if (response.trim() === '') {
-  console.log(`Success. Here's your link: https://${config.remoteDomain}${config.uploadDirPath.replace('/var/www', '')}${filename.replace(workingDir, '')}`)
+  console.log(`Success. Here's your link:\nhttps://${config.remoteDomain}${config.uploadDirPath.replace('/var/www', '')}${filename.replace(workingDir, '')}`)
 }
+
