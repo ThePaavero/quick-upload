@@ -49,7 +49,9 @@ const uploadFile = (config: ConfigObject): string | void => {
     const messages = [chalk.green('Success.'), chalk.white.bold(`Here's your link:`), chalk.bgWhite.black(url)]
     console.log(messages.join('\n'))
   } catch (error) {
-    return console.log(chalk.bgRed.black(`ERR: The file ${getFilenameWithoutPath(config)} could not be uploaded.\nThe error from remote:\n${error.toString()}`))
+    return console.log(
+      chalk.bgRed.black(`ERR: The file ${getFilenameWithoutPath(config)} could not be uploaded.\nHere's the error message from remote:\n${error.toString()}`)
+    )
   }
 }
 
