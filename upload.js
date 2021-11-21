@@ -1,6 +1,5 @@
 #!/usr/bin/node
 const { execSync, exec } = require('child_process')
-const fs = require('fs')
 const { argv } = require('process')
 const config = require('./.env.json')
 
