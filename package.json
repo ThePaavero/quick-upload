@@ -5,6 +5,7 @@
   "main": "upload.js",
   "scripts": {
     "start": "tsc --build --watch",
+    "build": "tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
@@ -16,5 +17,8 @@
     "ts-node": "^10.4.0",
     "tsc": "^2.0.3",
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2"
   }
 }
