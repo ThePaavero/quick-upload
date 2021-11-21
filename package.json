@@ -1,0 +1,14 @@
+{
+  "name": "upload",
+  "version": "1.0.0",
+  "description": "",
+  "main": "upload.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "upload": "./upload.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
