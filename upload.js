@@ -1,5 +1,5 @@
 #!/usr/bin/node
-const { execSync, exec } = require('child_process')
+const { execSync } = require('child_process')
 const { argv } = require('process')
 const config = require('./.env.json')
 
@@ -23,15 +23,20 @@ const getPossibleKeyFlag = () => {
 }
 
 if (argv[3] && argv[3] === '-d') {
-  execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'rm ${getFilenameWithoutPath()}'`)
-  console.log(`The file ${getFilenameWithoutPath()} has been removed.`)
-  return
+  try {
+    execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'rm ${getFilenameWithoutPath()}'`)
+    return console.log(`The file ${getFilenameWithoutPath()} has been removed.`)
+  } catch (error) {
+    return console.log(`ERR: The file ${getFilenameWithoutPath()} could not be removed.\n\nThe error from remote:\n\n${error.toString()}`)
+  }
 }
 
 const sourcePath = `${workingDir}/${filename}`
 const command = `scp ${getPossibleKeyFlag()} ${sourcePath} ${config.sshUsername}@${config.remoteDomain}:${config.uploadDirPath}`
-const response = execSync(command).toString()
 
-if (response.trim() === '') {
+try {
+  execSync(command)
   console.log(`Success. Here's your link:\n${config.remoteSchema}://${config.remoteDomain}${config.uploadDirPath.replace('/var/www', '')}${filename.replace(workingDir, '')}`)
+} catch (error) {
+  return console.log(`ERR: The file ${getFilenameWithoutPath()} could not be uploaded.\n\nThe error from remote:\n\n${error.toString()}`)
 }
