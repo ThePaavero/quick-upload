@@ -1,1 +1,4 @@
-*
+node_modules
+example-dir
+package*
+upload.js
