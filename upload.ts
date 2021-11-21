@@ -40,7 +40,7 @@ const deleteFile = (config: ConfigObject): string | void => {
   }
 }
 
-const uploadFile = (config: ConfigObject): string | void => {
+const uploadFile = (config: ConfigObject, waitAndDelete = false): string | void => {
   const sourcePath = `${workingDir}/${filename}`
   const command = `scp ${getPossibleKeyFlag(config)} ${sourcePath} ${config.sshUsername}@${config.remoteDomain}:${config.uploadDirPath}`
 
@@ -50,6 +50,10 @@ const uploadFile = (config: ConfigObject): string | void => {
     const url = `${config.remoteSchema}://${config.remoteDomain}${config.uploadDirPath.replace('/var/www', '')}${filename.replace(workingDir, '')}`
     const messages = [chalk.green('✅ Success.'), chalk.white.bold(`Here's your link:`), chalk.bgWhite.black(url)]
     console.log(messages.join('\n'))
+    if (waitAndDelete) {
+      // TODO: We need to do this with promises. Doesn't work yet.
+      console.log(chalk.red('Temporary file functionality is not yet ready.'))
+    }
   } catch (error) {
     return console.log(chalk.bgRed.black(`⛔ The file ${filenameWithoutPath} could not be uploaded.\nHere's the error message from remote:\n${error.toString()}`))
   }
@@ -57,6 +61,9 @@ const uploadFile = (config: ConfigObject): string | void => {
 
 if (argv[3] && argv[3] === '-d') {
   deleteFile(config)
+  process.exit(0)
+} else if (argv[3] && argv[3] === '-t') {
+  uploadFile(config, true)
   process.exit(0)
 } else if (argv[3]) {
   console.log(chalk.bgRed.black(`⛔ Unknown flag "${argv[3]}"`))
