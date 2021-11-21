@@ -36,7 +36,7 @@ const deleteFile = (config: ConfigObject): string | void => {
     execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'rm ${filenameWithoutPath}'`)
     return console.log(chalk.white(`✅ The file ${filenameWithoutPath} has been removed.`))
   } catch (error) {
-    return console.log(chalk.bgRed.black(`⛔ The file ${filenameWithoutPath} could not be removed.\n\nThe error from remote:\n\n${error.toString()}`))
+    return console.log(chalk.bgRed.black(`⛔ The file ${filenameWithoutPath} could not be removed.\n\nHere's the error from remote:\n\n${error.toString()}`))
   }
 }
 
