@@ -25,6 +25,7 @@ const getPossibleKeyFlag = () => {
 
 if (argv[3] && argv[3] === '-d') {
   execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'rm ${getFilenameWithoutPath()}'`)
+  console.log(`The file ${getFilenameWithoutPath()} has been removed.`)
   return
 }
 
