@@ -40,3 +40,4 @@ try {
 } catch (error) {
   return console.log(`ERR: The file ${getFilenameWithoutPath()} could not be uploaded.\n\nThe error from remote:\n\n${error.toString()}`)
 }
+
