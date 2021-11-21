@@ -59,15 +59,19 @@ const uploadFile = (config: ConfigObject, waitAndDelete = false): string | void 
   }
 }
 
-if (argv[3] && argv[3] === '-d') {
-  deleteFile(config)
-  process.exit(0)
-} else if (argv[3] && argv[3] === '-t') {
-  uploadFile(config, true)
-  process.exit(0)
-} else if (argv[3]) {
-  console.log(chalk.bgRed.black(`⛔ Unknown flag "${argv[3]}"`))
-  process.exit(0)
+if (argv[3]) {
+  const flag = argv[3].trim()
+  switch (flag) {
+    case '-d':
+      deleteFile(config)
+      process.exit(0)
+    case '-t':
+      uploadFile(config, true)
+      process.exit(0)
+    default:
+      console.log(chalk.bgRed.black(`⛔ Unknown flag "${flag}"`))
+      process.exit(0)
+  }
 }
 
 uploadFile(config)
