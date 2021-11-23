@@ -39,3 +39,12 @@
 ## Deleting a file
 
 - `upload <FILENAME> -d`
+
+---
+
+## Uploading a temporary file
+
+- `upload <FILENAME> -t`
+- Click the link, download the file.
+
+This will wait for you to hit any key (except for Enter, for some reason) and then delete file.
