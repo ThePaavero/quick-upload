@@ -4,6 +4,7 @@ import { execSync } from 'child_process'
 import { argv } from 'process'
 import config from './.env.json'
 import chalk from 'chalk'
+import readlineSync from 'readline-sync'
 
 interface ConfigObject {
   sshKeyPath?: string
@@ -51,8 +52,9 @@ const uploadFile = (config: ConfigObject, waitAndDelete = false): string | void 
     const messages = [chalk.green('✅ Success.'), chalk.white.bold(`Here's your link:`), chalk.bgWhite.black(url)]
     console.log(messages.join('\n'))
     if (waitAndDelete) {
-      // TODO: We need to do this with promises. Doesn't work yet.
-      console.log(chalk.red('Temporary file functionality is not yet ready.'))
+      console.log('Download the file and then press any key (except for Enter) to delete it.')
+      readlineSync.keyInPause()
+      deleteFile(config)
     }
   } catch (error) {
     return console.log(chalk.bgRed.black(`⛔ The file ${filenameWithoutPath} could not be uploaded.\nHere's the error message from remote:\n${error.toString()}`))
