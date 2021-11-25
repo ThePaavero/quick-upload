@@ -48,3 +48,20 @@
 - Click the link, download the file.
 
 This will wait for you to hit any key (except for Enter, for some reason) and then delete file.
+
+---
+
+## Listing uploaded files
+
+- `upload -l`
+
+Example output:
+
+```
+📑 Running "ls -la" on upload directory...
+Response:
+total 12
+drwxr-xr-x  2 root root 4096 Nov 25 20:46 .
+drwxr-xr-x 25 root root 4096 Nov 19 09:46 ..
+-rwxr-xr-x  1 root root 1404 Nov 25 20:46 example.txt
+```
