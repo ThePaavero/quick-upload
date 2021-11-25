@@ -60,6 +60,7 @@ const uploadFile = (config: ConfigObject, waitAndDelete = false): string | void 
   try {
     console.log(chalk.gray('🔼 Uploading...'))
     execSync(command, { stdio: undefined })
+    // TODO: Remove hard coded '/var/www' and get the path from config instead.
     const url = `${config.remoteSchema}://${config.remoteDomain}${config.uploadDirPath.replace('/var/www', '')}${filename.replace(workingDir, '')}`
     const messages = [chalk.green('✅ Success.'), chalk.white.bold(`Here's your link:`), chalk.bgWhite.black(url)]
     console.log(messages.join('\n'))
