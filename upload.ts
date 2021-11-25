@@ -64,9 +64,9 @@ const uploadFile = (config: ConfigObject, waitAndDelete = false): string | void 
     const messages = [chalk.green('✅ Success.'), chalk.white.bold(`Here's your link:`), chalk.bgWhite.black(url)]
     console.log(messages.join('\n'))
     if (waitAndDelete) {
-      console.log('Download the file and then press any key (except for Enter) to delete it.')
-      readlineSync.keyInPause()
+      const deleteOutput = readlineSync.question('Download the file and then press ENTER to delete it.', { hideEchoBack: true, mask: '' })
       deleteFile(config)
+      console.log(deleteOutput)
     }
   } catch (error) {
     return console.log(chalk.bgRed.black(`⛔ The file ${filenameWithoutPath} could not be uploaded.\nHere's the error message from remote:\n${error.toString()}`))
