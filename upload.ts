@@ -17,7 +17,7 @@ interface ConfigObject {
 const workingDir = process.cwd()
 const filename = argv[2] ? argv[2].trim() : null
 
-const showListOfUploadedFiles = () => {
+const showListOfUploadedFiles = (config: ConfigObject) => {
   console.log(chalk.white(`📑 Running "ls -la" on upload directory...`))
   const response = execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'cd ${config.uploadDirPath} \n ls -la'`).toString()
   console.log(chalk.gray('Response:'))
@@ -25,7 +25,7 @@ const showListOfUploadedFiles = () => {
 }
 
 if (argv[2] === '-l') {
-  showListOfUploadedFiles()
+  showListOfUploadedFiles(config)
   process.exit(0)
 }
 
