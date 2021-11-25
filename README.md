@@ -74,7 +74,7 @@ https://example.com/temp/example.txt
 Download the file and then press ENTER to delete it.
 ```
 
-After key press:
+After pressing ENTER:
 
 ```
 ✅ The file /var/www/temp/example.txt has been removed.
