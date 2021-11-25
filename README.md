@@ -3,8 +3,9 @@
 ## Installing
 
 - Clone or download the repo.
+- `cd quick-upload`
 - `npm i && npm run build`
-- Install globally so you can use it anywhere: `cd quick-upload && npm install -g ./`
+- Install globally so you can use it anywhere: `npm install -g ./`
 
 ---
 
