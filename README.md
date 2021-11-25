@@ -1,4 +1,4 @@
-# CLI script for quick uploading (and deleting) of a file via SCP
+# CLI script for uploading, deleting and listing files via SCP
 
 ## Installing
 
@@ -34,11 +34,26 @@
 - Navigate to a directory with the file you want to upload.
 - `upload <FILENAME>` (tab-autocomplete will work)
 
+Example output:
+
+```
+🔼 Uploading...
+✅ Success.
+Here's your link:
+https://example.com/temp/example.txt
+```
+
 ---
 
 ## Deleting a file
 
 - `upload <FILENAME> -d`
+
+Example output:
+
+```
+✅ The file /var/www/temp/example.txt has been removed.
+```
 
 ---
 
@@ -48,6 +63,23 @@
 - Click the link, download the file.
 
 This will wait for you to hit any key (except for Enter, for some reason) and then delete file.
+
+Example output:
+
+```
+🔼 Uploading...
+✅ Success.
+Here's your link:
+https://example.com/temp/example.txt
+Download the file and then press any key (except for Enter) to delete it.
+Continue... (Hit any key)
+```
+
+After key press:
+
+```
+✅ The file /var/www/temp/example.txt has been removed.
+```
 
 ---
 
