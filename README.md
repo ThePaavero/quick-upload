@@ -63,7 +63,7 @@ Example output:
 - `upload <FILENAME> -t`
 - Click the link, download the file.
 
-This will wait for you to hit ENTER and then delete file.
+This will wait for you to hit ENTER and then delete the file.
 
 Example output:
 
