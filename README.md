@@ -19,7 +19,8 @@
 ```
 {
   "sshKeyPath": "~/.ssh/id_rsa.pub",
-  "uploadDirPath": "/var/www/temp/",
+  "docRoot": "/var/www/",
+  "uploadDirPath": "temp/",
   "sshUsername": "username",
   "remoteDomain": "example.com",
   "remoteSchema": "https"
