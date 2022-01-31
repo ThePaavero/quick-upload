@@ -8,6 +8,7 @@ import readlineSync from 'readline-sync'
 
 interface ConfigObject {
   sshKeyPath?: string
+  docRoot: string
   uploadDirPath: string
   sshUsername: string
   remoteDomain: string
@@ -19,7 +20,7 @@ const filename = argv[2] ? argv[2].trim() : null
 
 const showListOfUploadedFiles = (config: ConfigObject): void => {
   console.log(chalk.white(`📑 Running "ls -la" on upload directory...`))
-  const response = execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'cd ${config.uploadDirPath} \n ls -la'`).toString()
+  const response = execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'cd ${config.docRoot}${config.uploadDirPath} \n ls -la'`).toString()
   console.log(chalk.gray('Response:'))
   console.log(response)
 }
@@ -35,7 +36,7 @@ if (!filename) {
 }
 
 const getFilenameWithoutPath = (config: ConfigObject): string => {
-  return `${config.uploadDirPath}${filename.replace(workingDir, '')}`
+  return `${config.docRoot}${config.uploadDirPath}${filename.replace(workingDir, '')}`
 }
 
 const filenameWithoutPath = getFilenameWithoutPath(config)
@@ -55,13 +56,12 @@ const deleteFile = (config: ConfigObject): string | void => {
 
 const uploadFile = (config: ConfigObject, waitAndDelete = false): string | void => {
   const sourcePath = `${workingDir}/${filename}`
-  const command = `scp ${getPossibleKeyFlag(config)} ${sourcePath} ${config.sshUsername}@${config.remoteDomain}:${config.uploadDirPath}`
+  const command = `scp ${getPossibleKeyFlag(config)} ${sourcePath} ${config.sshUsername}@${config.remoteDomain}:${config.docRoot}${config.uploadDirPath}`
 
   try {
     console.log(chalk.gray('🔼 Uploading...'))
     execSync(command, { stdio: undefined })
-    // TODO: Remove hard coded '/var/www' and get the path from config instead.
-    const url = `${config.remoteSchema}://${config.remoteDomain}${config.uploadDirPath.replace('/var/www', '')}${filename.replace(workingDir, '')}`
+    const url = `${config.remoteSchema}://${config.remoteDomain}/${config.uploadDirPath.replace(config.docRoot, '')}${filename.replace(workingDir, '')}`
     const messages = [chalk.green('✅ Success.'), chalk.white.bold(`Here's your link:`), chalk.bgWhite.black(url)]
     console.log(messages.join('\n'))
     if (waitAndDelete) {
