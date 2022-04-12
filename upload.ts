@@ -25,6 +25,32 @@ const showListOfUploadedFiles = (config: ConfigObject): void => {
   console.log(response)
 }
 
+const showHelp = (): void => {
+  const pairSeparator = '\n'
+  const flagSeparator = chalk.gray('\n---\n\n')
+  const flagMap = {
+    '<filename>': 'Uploads given file. Provides URL.',
+    '<filename> -t': 'Uploads given file, waits for your to hit enter which will trigger deleting of the uploaded file. Provides URL.',
+    '<filename> -d': `Deletes given file.`,
+    '-h': 'Shows this.',
+    '-l': 'Lists uploaded files',
+  }
+  console.log(
+    `\n${chalk.bgWhite.black('Flags and their actions:')}\n\n${Object.entries(flagMap)
+      .map((item, index) => {
+        const flag = chalk.white('upload ') + chalk.green(`${item[0]}`)
+        const text = chalk.white(`${item[1]}\n`)
+        return `${flag}${pairSeparator}> ${text}${index < Object.keys(flagMap).length - 1 ? flagSeparator : ''}`
+      })
+      .join('')}`
+  )
+}
+
+if (argv[2] === '-h' || !argv[2]) {
+  showHelp()
+  process.exit(0)
+}
+
 if (argv[2] === '-l') {
   showListOfUploadedFiles(config)
   process.exit(0)
