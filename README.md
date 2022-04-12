@@ -31,6 +31,18 @@
 
 ---
 
+## Listing options
+
+```
+upload
+```
+
+...or...
+
+```
+upload -h
+```
+
 ## Uploading a file
 
 - Navigate to a directory with the file you want to upload.
