@@ -32,8 +32,9 @@ const showHelp = (): void => {
     '<filename>': 'Uploads given file. Provides URL.',
     '<filename> -t': 'Uploads given file, waits for your to hit enter which will trigger deleting of the uploaded file. Provides URL.',
     '<filename> -d': `Deletes given file.`,
+    '-l': 'Lists uploaded files.',
+    '-n': 'Deletes all uploaded files ("n" for "nuke").',
     '-h': 'Shows this.',
-    '-l': 'Lists uploaded files',
   }
   console.log(
     `\n${chalk.bgWhite.black('Flags and their actions:')}\n\n${Object.entries(flagMap)
@@ -80,6 +81,15 @@ const deleteFile = (config: ConfigObject): string | void => {
   }
 }
 
+const deleteFiles = (config: ConfigObject): string | void => {
+  try {
+    execSync(`ssh ${config.sshUsername}@${config.remoteDomain} 'rm -rf ${config.docRoot}${config.uploadDirPath}*'`)
+    return console.log(chalk.white(`✅ All files have been removed.`))
+  } catch (error) {
+    return console.log(chalk.bgRed.black(`⛔ The files could not be removed.\n\nHere's the error from remote:\n${error.toString()}`))
+  }
+}
+
 const uploadFile = (config: ConfigObject, waitAndDelete = false): string | void => {
   const sourcePath = `${workingDir}/${filename}`
   const command = `scp ${getPossibleKeyFlag(config)} ${sourcePath} ${config.sshUsername}@${config.remoteDomain}:${config.docRoot}${config.uploadDirPath}`
@@ -98,6 +108,11 @@ const uploadFile = (config: ConfigObject, waitAndDelete = false): string | void 
   } catch (error) {
     return console.log(chalk.bgRed.black(`⛔ The file ${filenameWithoutPath} could not be uploaded.\nHere's the error message from remote:\n${error.toString()}`))
   }
+}
+
+if (argv[2] === '-n') {
+  deleteFiles(config)
+  process.exit(0)
 }
 
 if (!argv[3]) {
